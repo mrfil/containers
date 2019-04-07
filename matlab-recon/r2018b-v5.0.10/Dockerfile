@@ -20,8 +20,14 @@ RUN sudo /usr/bin/python fslinstaller.py -d /usr/local/fsl -V 5.0.10
 # Setup Shell environment for FSL
 ENV FSLDIR=/usr/local/fsl
 
-RUN echo '. ${FSLDIR}/etc/fslconf/fsl.sh' >> ~/.bash_profile
-
+# Setup FSL Defaults
+ENV FSLOUTPUTTYPE=NIFTI_GZ
+ENV FSLMULTIFILEQUIT=TRUE
+ENV FSLTCLSH=$FSLDIR/bin/fsltclsh
+ENV FSLWISH=$FSLDIR/bin/fslwish
+ENV FSLLOCKDIR=
+ENV FSLMACHINELIST=
+ENV FSLREMOTECALL=
 ENV PATH=${FSLDIR}/bin:${PATH}
 
 ENV export FSLDIR PATH

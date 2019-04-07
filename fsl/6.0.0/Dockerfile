@@ -10,7 +10,7 @@ FROM nvidia/cuda:8.0-runtime
 WORKDIR /root
 
 RUN apt-get -y update; \
-	apt-get -y install curl python2.7 libxcb1 libomp-dev
+	apt-get -y install curl python2.7 libxcb1 libomp-dev libopenblas-dev
 
 # Get the FSL Install Script
 RUN curl -O -L https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py
@@ -21,7 +21,14 @@ RUN python2.7 fslinstaller.py -d /usr/local/fsl -V 6.0.0
 # Setup Shell environment for FSL
 ENV FSLDIR=/usr/local/fsl
 
-RUN echo '. ${FSLDIR}/etc/fslconf/fsl.sh' >> ~/.bash_profile
+# Setup FSL Defaults
+ENV FSLOUTPUTTYPE=NIFTI_GZ
+ENV FSLMULTIFILEQUIT=TRUE
+ENV FSLTCLSH=$FSLDIR/bin/fsltclsh
+ENV FSLWISH=$FSLDIR/bin/fslwish
+ENV FSLLOCKDIR=
+ENV FSLMACHINELIST=
+ENV FSLREMOTECALL=
 
 ENV PATH=${FSLDIR}/bin:${PATH}
 

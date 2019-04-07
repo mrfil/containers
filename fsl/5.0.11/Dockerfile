@@ -21,7 +21,7 @@ RUN python2.7 fslinstaller.py -d /usr/local/fsl -V 5.0.11
 # Setup Shell environment for FSL
 ENV FSLDIR=/usr/local/fsl
 
-RUN . ${FSLDIR}/etc/fslconf/fsl.sh
+RUN echo '. ${FSLDIR}/etc/fslconf/fsl.sh' >> ~/.bash_profile
 
 ENV PATH=${FSLDIR}/bin:${PATH}
 
